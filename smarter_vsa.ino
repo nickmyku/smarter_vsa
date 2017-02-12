@@ -21,7 +21,7 @@
 #define SENSOR_SAMPLES  5     // number of samples to use for sensor avaeraging
 #define SAMPLE_DELAY    100   // delay between sensor sampling for averaging (milliseconds)
 #define TOGGLE_DURATION 4000  // amount of time the VSA off signal is asserted for (milliseconds)
-#define HYSTERESIS_TIME 6000    // amount of time a hazard condition has to be present for before its asserted (approximately 1/10th seconds)
+#define HYSTERESIS_TIME 500    // amount of time a hazard condition has to be present for before its asserted (value * 0.6 = seconds)
 
 #define NUM_PIXELS 32        // number of neopixels in the strand
 
@@ -80,6 +80,12 @@ int category = 0;
 
 float temp_c = 0;             // temperature in degrees celcius
 float humidity = 0;           // relative humidity
+
+
+// ----------------------------------------------------------
+//                          SETUP
+// ----------------------------------------------------------
+
 
 void setup() {
   int brightness_val = 0;
@@ -191,12 +197,12 @@ void setup() {
   humidity = sht1x.readHumidity();//avgHumidity();
 
   // check if it is below freezing
-  if(temp_c <= values[TEMPERATURE_LIMIT]) {
+  if(temp_c <= float(values[TEMPERATURE_LIMIT])) {
     ice_hazard = true;
   }
 
   // check if it is raining
-  if(humidity >= values[HUMIDITY_LIMIT])  {
+  if(humidity >= float(values[HUMIDITY_LIMIT]))  {
     rain_hazard = true;
   }
 
@@ -209,6 +215,10 @@ void setup() {
   }
   
 }
+
+// ----------------------------------------------------------
+//                          LOOP
+// ----------------------------------------------------------
 
 void loop() {
   // Read values from the sensor
@@ -381,7 +391,7 @@ void loop() {
   }
 
   // handle raining/not raining hysteresis
-  if(humidity >= values[HUMIDITY_LIMIT])  {
+  if(humidity >= float(values[HUMIDITY_LIMIT]))  {
     if(rain_count < HYSTERESIS_TIME)  {
       rain_count++;
     }
@@ -396,7 +406,7 @@ void loop() {
   }
 
   // handle freezing/not freezing hysteresis
-  if(temp_c <= values[TEMPERATURE_LIMIT])  {
+  if(temp_c <= float(values[TEMPERATURE_LIMIT]))  {
     if(ice_count < HYSTERESIS_TIME)  {
       ice_count++;
     }
@@ -432,6 +442,10 @@ void loop() {
   //delay(100);  // wait before running loop again
 
 }
+
+// ----------------------------------------------------------
+//                        FUNCTIONS
+// ----------------------------------------------------------
 
 // function for debouncing button presses
 void debounce(int pin_num){
