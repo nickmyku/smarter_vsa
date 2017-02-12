@@ -2,7 +2,7 @@
 
 Intedned to be used on a 2008-2012 Honda Accord
 
-The primary purpose of this system is to intelligentaly disable the car's VSA system and add mood lighting to the passenger cabin (because why not). Also lets through an unessasary OLED screen for good measure #FeatureCreep
+The primary purpose of this system is to intelligentaly disable the car's VSA system and add mood lighting to the passenger cabin (because why not). Also lets add an unessasary OLED screen for good measure #FeatureCreep
 
 No one likes VSA in fair weather, especially on a ~300hp front wheel drive coupe with an open differential, it completely criples the cars preformance. That being said if it did not have VSA during the winter months the car would be almost undrivable. This system will only disable the VSA if it is not raining (very humuid) and above freezing outside
 
